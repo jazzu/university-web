@@ -6,6 +6,8 @@
     var lastMessageId         = #{@messages.size == 0 ? 0 : @messages.last.id};
   
     $(document).ready(function(){
+      $("label.infield").inFieldLabels();
+    
       $.scrollTo('#bottom', { axis: 'y' });
       
       setInterval('loadMessages()', 3000);
@@ -38,8 +40,17 @@
 
 %h1 IRC Log
 
-- if @more_messages
-  %p= link_to "Load all messages", chat_messages_path(:channel => params[:channel], :full_log => true, :topic => params[:topic])
+- content_for :menu do
+  - form_tag chat_messages_path, :method => :get, :id => "irc" do
+    = label_tag "search", "Search Logs", :class => 'infield'
+    = text_field_tag "search",     params[:search]
+    = hidden_field_tag "channel",  params[:channel]
+    = hidden_field_tag("full_log", params[:full_log]) if params[:full_log]
+    
+    - # submit_tag "Search"
+  - if @more_messages
+    = link_to "Load all messages", chat_messages_path(:channel => params[:channel], :full_log => true, :topic => params[:topic])
+
 
 - form_tag chat_messages_path, :method => :get do
   = text_field_tag "search", params[:search]
