@@ -18,7 +18,8 @@
         { channel:  '#{params[:channel]}',
           since:    lastMessageRecordedAt,
           last_id:  lastMessageId,
-          topic:    '#{params[:topic]}'
+          topic:    '#{params[:topic]}',
+          search:   '#{params[:search]}'
         },
         function(data){
           if(data.length > 0){
