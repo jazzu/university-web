@@ -14,6 +14,8 @@ University::Application.routes.draw do |map|
   #   resources :products
   
   root :to => "home#show"
+
+  match "chat/messages/search" => "chat/messages#search"
   
   namespace :chat do
     resources :messages

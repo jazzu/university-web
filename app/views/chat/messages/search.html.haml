@@ -1,0 +1,36 @@
+- title "Chat search"
+
+- content_for :header_bottom do
+  :javascript
+    $(document).ready(function(){
+      $("label.infield").inFieldLabels();
+    });
+
+- content_for :menu do
+  - form_tag chat_messages_search_path, :method => :get, :id => "irc" do
+    = label_tag "search", "Search Logs", :class => 'infield'
+    = text_field_tag "search"
+    = hidden_field_tag "channel",  params[:channel]
+    = hidden_field_tag("full_log", params[:full_log]) if params[:full_log]
+
+%h1= "Search results for '"+params[:search]+"'"
+
+- if @messages.size > 0
+  %h2 Messages
+  %table.messages
+    - @messages.each do |message|
+      = render :partial => "message", :locals => {:message => message}
+
+- if @topics.size > 0
+  %h2 Topics
+  %ul.topics
+    - @topics.each do |topic|
+      = render :partial => "topic", :locals => {:topic => topic}
+
+- if not @handles.nil? and @handles.size > 0
+  %h2 Handles
+  %ul.handles
+    - @handles.each do |handle|
+      = render :partial => "handle", :locals => {:handle => handle}
+
+#bottom

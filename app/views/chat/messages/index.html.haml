@@ -42,7 +42,7 @@
 %h1 IRC Log
 
 - content_for :menu do
-  - form_tag chat_messages_path, :method => :get, :id => "irc" do
+  - form_tag chat_messages_search_path, :method => :get, :id => "irc" do
     = label_tag "search", "Search Logs", :class => 'infield'
     = text_field_tag "search",     params[:search]
     = hidden_field_tag "channel",  params[:channel]
@@ -51,13 +51,6 @@
     - # submit_tag "Search"
   - if @more_messages
     = link_to "Load all messages", chat_messages_path(:channel => params[:channel], :full_log => true, :topic => params[:topic])
-
-
-- form_tag chat_messages_path, :method => :get do
-  = text_field_tag "search", params[:search]
-  = hidden_field_tag "channel", params[:channel]
-  = submit_tag "Search"
-
 
 %table.messages
   - if @messages.size == 0
